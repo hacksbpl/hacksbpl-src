@@ -1,0 +1,20 @@
+{
+  "name": "hacksbpl",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "grunt-cli": "^1.2.0",
+    "react": "^16.1.1",
+    "react-addons-transition-group": "^15.6.2",
+    "react-dom": "^16.1.1",
+    "react-scripts": "1.0.17",
+    "reactstrap": "^4.8.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "deploy": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "build": "grunt dist --base src/bootstrap-4.0.0/ --gruntfile src/bootstrap-4.0.0/GruntFile.js && build.bat"
+  }
+}
