@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, InputGroup, InputGroupAddon, Input } from 'reactstrap';
 import logo from "./logo.png";
-import background from "./background.png";
+import background from "./background.jpg";
 import faq1 from "./faq1.jpg";
 import faq2 from "./faq2.jpg";
 import faq3 from "./faq3.jpg";
