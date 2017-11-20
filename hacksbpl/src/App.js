@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay } from 'reactstrap';
+import { Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, InputGroup, InputGroupAddon, Input } from 'reactstrap';
 import logo from "./logo.png";
-import background from "./background.jpg";
+import background from "./background.png";
 import faq1 from "./faq1.jpg";
 import faq2 from "./faq2.jpg";
 import faq3 from "./faq3.jpg";
@@ -26,11 +26,33 @@ class App extends Component
     {
         this.setState({
             drawer_left: false,
-            drawer_right: false
+            drawer_right: false,
+            blur: 0,
+            blur_dir: 0,
+            blur_min: 0,
+            blur_max: 10,
+            blur_step: 2
         });
     }
     render()
     {
+        if (this.state.blur !== this.state.blur_min && this.state.blur !== this.state.blur_max)
+        {
+            if (this.state.blur_dir === 0)
+            {
+                setTimeout(() =>
+                {
+                    this.setState({ blur: this.state.blur + this.state.blur_step });
+                }, 1);
+            }
+            else
+            {
+                setTimeout(() =>
+                {
+                    this.setState({ blur: this.state.blur - this.state.blur_step });
+                }, 1);
+            }
+        }    
         return (
             <div>
                 <div style={{
@@ -45,12 +67,12 @@ class App extends Component
                     transform: "scale(1.5)",
                     backgroundSize: "100% auto"
                 }}></div>
-                <div id="body-top" style={{ height: 110, backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
+                <div id="body-top" style={{ height: 110, backgroundColor: "rgba(0, 0, 0, 0.5)", filter: "blur(" + this.state.blur + "px)" }}>
                     <ScrollableAnchor id="welcome">
                         <h1 className="display-2" style={{ color: "white", textAlign: "center", margin: 0 }}></h1>
                     </ScrollableAnchor>
                 </div>
-                <Navbar id="body-nav" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }} inverse toggleable fixed="bottom" className="sticky-top">
+                <Navbar id="body-nav" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)", filter: "blur(" + this.state.blur + "px)" }} inverse toggleable fixed="bottom" className="sticky-top">
                     <NavbarToggler />
                     <Collapse isOpen={true} navbar>
                         <Nav className="mr-auto" navbar style={{ paddingLeft: 125, fontSize: 20, marginTop: 15, fontFamily: "mlh" }}>
@@ -79,19 +101,53 @@ class App extends Component
                         </a>
                     </Collapse>
                 </Navbar>
-                <Drawer style={{ background: 'red' }} docked={false} width={300} open={this.state.drawer_left} openSecondary={false} onRequestChange={(open) => this.setState({ drawer_left: open })}>
-                    <h1>Contact</h1>
+                <Drawer docked={false} width="75%" open={this.state.drawer_left} openSecondary={true} onRequestChange={(open) => this.setState({ drawer_left: open, blur: this.state.blur_max - this.state.blur_step, blur_dir: 1 })}>
+                    <div style={{ color: "white", width: "100%", paddingLeft: 20, paddingRight: 20 }}>
+                        <Button color="danger" outline style={{ position: "absolute", left: 10, top: 10, borderRadius: 0, border: 0 }} onClick={(e) => this.setState({ drawer_left: false, blur: this.state.blur_max - this.state.blur_step, blur_dir: 1 })}><Icon name="times" /></Button>
+                        <h1 className="display-3" style={{ textAlign: "center", marginTop: "calc(50% - 400px)" }}>Questions? Comments? Concerns?</h1>
+                        <p className="lead" style={{ textAlign: "center", marginLeft: "12%", width: "75%" }}>
+                            HackSB is run by the <a href="https://sbcompsciclub.github.io/">South Brunswick Computer Science Club (CSC@SBHS)</a>, and the <a href="http://www.sbpl.info/">South Brunswick Public Library (SBPL)</a>.
+                        </p>                        
+                        <h1 style={{ textAlign: "center" }}>CSC@SBHS <small>Executive Board</small></h1>
+                        <Button href="mailto:sbcompsciclub@gmail.com" outline color="success" style={{ marginLeft: "calc(50% - 150px)", borderTopLeftRadius: 100, borderBottomLeftRadius: 100, borderRight: 0 }}><Icon name="envelope" /> Email</Button>
+                        <Button href="https://github.com/sbcompsciclub/" outline color="success" style={{ borderRadius: 0, borderLeft: 0, borderRight: 0 }}><Icon name="github" /> GitHub</Button>
+                        <Button href="https://sbcompsciclub.github.io/" outline color="success" style={{ borderTopRightRadius: 100, borderBottomRightRadius: 100, borderLeft: 0 }}><Icon name="sitemap" /> Website</Button>
+                        <h1 style={{ textAlign: "center" }}>Saleena Davidson <small>SBPL Teen Coordinator</small></h1>
+                        <Button href="mailto:saleenasteens@gmail.com" outline color="success" style={{ marginLeft: "calc(50% - 190px)", borderTopLeftRadius: 100, borderBottomLeftRadius: 100, borderRight: 0 }}><Icon name="envelope" /> Email</Button>
+                        <Button href="https://github.com/sbcompsciclub/" outline disabled color="success" style={{ borderRadius: 0, borderLeft: 0, borderRight: 0 }}><Icon name="phone" /> 732-329-4000 x7634</Button>
+                        <Button href="http://www.sbpl.info/" outline color="success" style={{ borderTopRightRadius: 100, borderBottomRightRadius: 100, borderLeft: 0 }}><Icon name="sitemap" /> Website</Button>
+                    </div>
                 </Drawer>
-                <Drawer docked={false} width={300} open={this.state.drawer_right} openSecondary={true} onRequestChange={(open) => this.setState({ drawer_right: open })}>
-                    <h1>Test</h1>
+                <Drawer docked={false} width="75%" open={this.state.drawer_right} openSecondary={false} onRequestChange={(open) => this.setState({ drawer_right: open, blur: this.state.blur_max - this.state.blur_step, blur_dir: 1 })}>
+                    <div style={{ color: "white", width: "100%", paddingLeft: 20, paddingRight: 20 }}>
+                        <Button color="danger" outline style={{ position: "absolute", right: 10, top: 10, borderRadius: 0, border: 0 }} onClick={(e) => this.setState({ drawer_right: false, blur: this.state.blur_max - this.state.blur_step, blur_dir: 1 })}><Icon name="times" /></Button>
+                        <h1 className="display-3" style={{ textAlign: "center", marginTop: "calc(50% - 400px)" }}>Register to HackSB</h1>                        
+                        <h1 style={{ textAlign: "center" }}>General <small>Information</small></h1>
+                        <InputGroup size="lg" style={{ width: "75%", marginLeft: "12%" }}>
+                            <InputGroupAddon style={{ backgroundColor: "rgba(0, 0, 0, 0.1)", color: "rgba(255, 255, 255, 0.75)" }}>First Name</InputGroupAddon>
+                            <Input style={{ backgroundColor: "rgba(0, 0, 0, 0)", color: "rgba(255, 255, 255, 1)" }} />
+                            <InputGroupAddon style={{ backgroundColor: "rgba(0, 0, 0, 0.1)", color: "rgba(255, 255, 255, 0.75)" }}>Last Name</InputGroupAddon>
+                            <Input style={{ backgroundColor: "rgba(0, 0, 0, 0)", color: "rgba(255, 255, 255, 1)" }} />
+                        </InputGroup>
+                        <InputGroup size="lg" style={{ width: "75%", marginLeft: "12%", marginTop: 10 }}>
+                            <InputGroupAddon style={{ backgroundColor: "rgba(0, 0, 0, 0.1)", color: "rgba(255, 255, 255, 0.75)" }}>Email</InputGroupAddon>
+                            <Input style={{ backgroundColor: "rgba(0, 0, 0, 0)", color: "rgba(255, 255, 255, 1)" }} />
+                        </InputGroup>                        
+                        <h1 style={{ textAlign: "center" }}>High <small>School</small></h1>
+                        <InputGroup size="lg" style={{ width: "75%", marginLeft: "12%" }}>
+                            <InputGroupAddon style={{ backgroundColor: "rgba(0, 0, 0, 0.1)", color: "rgba(255, 255, 255, 0.75)" }}>School</InputGroupAddon>
+                            <Input style={{ backgroundColor: "rgba(0, 0, 0, 0)", color: "rgba(255, 255, 255, 1)" }} />
+                        </InputGroup>
+                        <h1 style={{ textAlign: "center" }}>Review <small>and Submit</small></h1>
+                    </div>    
                 </Drawer>
-                <div id="body-bottom">
+                <div id="body-bottom" style={{ filter: "blur(" + this.state.blur + "px)" }}>
                     <Jumbotron style={{ paddingLeft: "10%", paddingRight: "10%", borderRadius: 0, backgroundColor: "rgba(0, 0, 0, 0.5)", height: window.innerHeight - 110 - 90, marginBottom: 0, textAlign: "center" }}>
                         <h1 className="display-3" style={{ textAlign: "center", marginTop: ((window.innerHeight - 110 - 90) / 2) - 200, color: "white" }}>HackSB Spring 2018</h1>
                         <h1 className="display-5" style={{ textAlign: "center", color: "white" }}>April 6th-7th, 2018</h1>
-                        <Button outline color="primary" style={{ marginTop: 100, borderRadius: 100 }} onClick={() => { this.setState({ drawer_left: true }) }}><Icon name="chevron-left"/> Contact</Button>
+                        <Button outline color="primary" style={{ marginTop: 100, borderRadius: 100 }} onClick={() => { this.setState({ drawer_left: true, blur: this.state.blur_min + this.state.blur_step, blur_dir: 0 }) }}><Icon name="chevron-left"/> Contact</Button>
                         <Button outline color="danger" href="#about" style={{ marginLeft: 10, marginRight: 10, marginTop: 150, borderRadius: 100 }}>Learn More <Icon name="chevron-down" /></Button>
-                        <Button outline color="primary" style={{ marginTop: 100, borderRadius: 100 }} onClick={() => { this.setState({ drawer_right: true }) }}>Register <Icon name="chevron-right"/></Button>
+                        <Button outline color="primary" style={{ marginTop: 100, borderRadius: 100 }} onClick={() => { this.setState({ drawer_right: true, blur: this.state.blur_min + this.state.blur_step, blur_dir: 0 }) }}>Register <Icon name="chevron-right"/></Button>
                     </Jumbotron>
                     <Jumbotron style={{ paddingLeft: "10%", paddingRight: "10%", borderRadius: 0, backgroundColor: "rgba(0, 0, 0, 0.25)", color: "white", marginBottom: 0, paddingBottom: 150 }}>
                         <ScrollableAnchor id="about">

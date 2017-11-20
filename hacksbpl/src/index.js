@@ -8,8 +8,9 @@ import { cyan500 } from 'material-ui/styles/colors';
 function main()
 {
     let muiTheme = getMuiTheme({
+        fontFamily: 'Segoe UI',
         palette: {
-            cavasColor: cyan500
+            canvasColor: "rgba(100, 100, 150, 0.25)",
         }
     });
     ReactDOM.render(<MuiThemeProvider muiTheme={muiTheme}><App /></MuiThemeProvider>, document.getElementById("main"));
