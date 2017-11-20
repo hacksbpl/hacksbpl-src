@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay } from 'reactstrap';
 import logo from "./logo.png";
 import background from "./background.jpg";
+import faq1 from "./faq1.jpg";
+import faq2 from "./faq2.jpg";
+import faq3 from "./faq3.jpg";
+import faq4 from "./faq4.jpg";
 import ScrollableAnchor from 'react-scrollable-anchor';
 import { configureAnchors } from 'react-scrollable-anchor';
 import { Icon } from 'react-fa';
@@ -15,6 +19,12 @@ class App extends Component
         window.addEventListener("resize", (e) =>
         {
             self.setState({ IGNOREMEFAM: "" });
+        });
+    }
+    componentWillMount()
+    {
+        this.setState({
+            open: false
         });
     }
     render()
@@ -109,36 +119,42 @@ class App extends Component
                         <ScrollableAnchor id="faqs">
                             <h1 className="display-3" style={{ paddingTop: 60 }}>FAQs</h1>
                         </ScrollableAnchor>
-                        <Card inverse style={{ borderRadius: 0, width: 500, display: "inline-block", marginLeft: "calc(50% - 525px)" }}>
-                            <CardImg width="100%" src="http://tricks-collections.com/wp-content/uploads/2015/10/business-needs-a-biometric-time-clock.jpg" />
+                        <Card inverse style={{ borderRadius: 0, width: 500, display: "inline-block", marginLeft: "calc(50% - 475px)" }}>
+                            <CardImg width="100%" src={faq1} />
                             <CardImgOverlay style={{ backgroundColor: "rgba(0, 0, 0, 0.75)", margin: -1 }}>
                                 <CardTitle>Who can attend?</CardTitle>
                                 <CardText>All high school students are welcome, even if you do not attend SBHS. If you are a college student, and interested in mentoring, please contact us!</CardText>
                                 <CardText><small>Please direct all mentoring inquiries to <a href="mailto:sbcompsciclub@gmail.com">sbcompsciclub@gmail.com</a></small></CardText>
                             </CardImgOverlay>
                         </Card>
-                        <Card inverse style={{ borderRadius: 0, width: 500, display: "inline-block", marginLeft: 50 }}>
-                            <CardImg width="100%" src="https://wallpaper.wiki/wp-content/uploads/2017/05/Laptop_Keypad_Closeup_Wallpaper.jpg" />
+                        <Card inverse style={{ borderRadius: 0, width: 400, display: "inline-block", marginLeft: 50 }}>
+                            <CardImg width="100%" src={faq2} />
                             <CardImgOverlay style={{ backgroundColor: "rgba(0, 0, 0, 0.75)", margin: -1 }}>
                                 <CardTitle>Do I need any prior experience?</CardTitle>
-                                <CardText>All high school students are welcome, even if you do not attend SBHS. If you are a college student, and interested in mentoring, please contact us!</CardText>
-                                <CardText><small>Please direct all mentoring inquiries to <a href="mailto:sbcompsciclub@gmail.com">sbcompsciclub@gmail.com</a></small></CardText>
+                                <CardText>Not at all! The less experience you have, the more you can learn!</CardText>
                             </CardImgOverlay>
                         </Card>
-                        <Card inverse style={{ borderRadius: 0, width: 500, display: "inline-block", marginLeft: "calc(50% - 525px)", marginTop: 50 }}>
-                            <CardImg width="100%" src="http://thewallpaper.co/wp-content/uploads/2016/10/Hd-Laptop-wallpapers-hd-desktop-wallpapers-amazing-images-background-photos-smart-phone-background-photos-widescreen-desktop-backgrounds-colourful-ultra-hd-2560x1600-768x480.jpg" />
+                        <Card inverse style={{ borderRadius: 0, width: 400, display: "inline-block", marginLeft: "calc(50% - 475px)", marginTop: 50 }}>
+                            <CardImg width="100%" src={faq4} />
                             <CardImgOverlay style={{ backgroundColor: "rgba(0, 0, 0, 0.75)", margin: -1 }}>
-                                <CardTitle>What should I bring?</CardTitle>
-                                <CardText>All high school students are welcome, even if you do not attend SBHS. If you are a college student, and interested in mentoring, please contact us!</CardText>
-                                <CardText><small>Please direct all mentoring inquiries to <a href="mailto:sbcompsciclub@gmail.com">sbcompsciclub@gmail.com</a></small></CardText>
+                                <CardTitle>Can I win anything?</CardTitle>
+                                <CardText>Of course! At HackSB, you will have the opportunity to compete with others and win many prizes</CardText>
                             </CardImgOverlay>
                         </Card>
                         <Card inverse style={{ borderRadius: 0, width: 500, display: "inline-block", marginLeft: 50, marginTop: 50 }}>
-                            <CardImg width="100%" src="http://s2.quickmeme.com/img/fc/fc7e1b09bcb54f86aa53394b8047e95261357c74410860202c8d6f3ea2787b53.jpg" />
+                            <CardImg width="100%" src={faq3} />
                             <CardImgOverlay style={{ backgroundColor: "rgba(0, 0, 0, 0.75)", margin: -1 }}>
-                                <CardTitle>Can I win anything?</CardTitle>
-                                <CardText>All high school students are welcome, even if you do not attend SBHS. If you are a college student, and interested in mentoring, please contact us!</CardText>
-                                <CardText><small>Please direct all mentoring inquiries to <a href="mailto:sbcompsciclub@gmail.com">sbcompsciclub@gmail.com</a></small></CardText>
+                                <CardTitle>What should I bring?</CardTitle>
+                                <CardText>
+                                    <ui>
+                                        <li>Laptop</li>
+                                        <li>Phone</li>
+                                        <li>Chargers</li>
+                                        <li>Powerstrips</li>
+                                        <li>Imagination</li>
+                                    </ui>
+                                </CardText>
+                                <CardText><small>Please avoid bringing weapons, alcohol, illegal drugs, or anything you wouldn't bring to school.</small></CardText>
                             </CardImgOverlay>
                         </Card>
                     </Jumbotron>
