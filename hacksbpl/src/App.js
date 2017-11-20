@@ -9,6 +9,7 @@ import faq4 from "./faq4.jpg";
 import ScrollableAnchor from 'react-scrollable-anchor';
 import { configureAnchors } from 'react-scrollable-anchor';
 import { Icon } from 'react-fa';
+import Drawer from 'material-ui/Drawer';
 class App extends Component
 {
     constructor()
@@ -24,7 +25,8 @@ class App extends Component
     componentWillMount()
     {
         this.setState({
-            open: false
+            drawer_left: false,
+            drawer_right: false
         });
     }
     render()
@@ -77,13 +79,19 @@ class App extends Component
                         </a>
                     </Collapse>
                 </Navbar>
+                <Drawer style={{ background: 'red' }} docked={false} width={300} open={this.state.drawer_left} openSecondary={false} onRequestChange={(open) => this.setState({ drawer_left: open })}>
+                    <h1>Contact</h1>
+                </Drawer>
+                <Drawer docked={false} width={300} open={this.state.drawer_right} openSecondary={true} onRequestChange={(open) => this.setState({ drawer_right: open })}>
+                    <h1>Test</h1>
+                </Drawer>
                 <div id="body-bottom">
                     <Jumbotron style={{ paddingLeft: "10%", paddingRight: "10%", borderRadius: 0, backgroundColor: "rgba(0, 0, 0, 0.5)", height: window.innerHeight - 110 - 90, marginBottom: 0, textAlign: "center" }}>
                         <h1 className="display-3" style={{ textAlign: "center", marginTop: ((window.innerHeight - 110 - 90) / 2) - 200, color: "white" }}>HackSB Spring 2018</h1>
                         <h1 className="display-5" style={{ textAlign: "center", color: "white" }}>April 6th-7th, 2018</h1>
-                        <Button outline color="primary" href="#about" style={{ marginTop: 100, borderRadius: 100 }}><Icon name="chevron-left"/> Contact</Button>
+                        <Button outline color="primary" style={{ marginTop: 100, borderRadius: 100 }} onClick={() => { this.setState({ drawer_left: true }) }}><Icon name="chevron-left"/> Contact</Button>
                         <Button outline color="danger" href="#about" style={{ marginLeft: 10, marginRight: 10, marginTop: 150, borderRadius: 100 }}>Learn More <Icon name="chevron-down" /></Button>
-                        <Button outline color="primary" href="#about" style={{ marginTop: 100, borderRadius: 100 }}>Register <Icon name="chevron-right"/></Button>
+                        <Button outline color="primary" style={{ marginTop: 100, borderRadius: 100 }} onClick={() => { this.setState({ drawer_right: true }) }}>Register <Icon name="chevron-right"/></Button>
                     </Jumbotron>
                     <Jumbotron style={{ paddingLeft: "10%", paddingRight: "10%", borderRadius: 0, backgroundColor: "rgba(0, 0, 0, 0.25)", color: "white", marginBottom: 0, paddingBottom: 150 }}>
                         <ScrollableAnchor id="about">
