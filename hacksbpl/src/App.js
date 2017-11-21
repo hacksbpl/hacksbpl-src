@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, InputGroup, InputGroupAddon, Input } from 'reactstrap';
+import { Form, FormGroup, Col, Label, Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, InputGroup, InputGroupAddon, Input } from 'reactstrap';
 import logo from "./logo.png";
 import background from "./background.jpg";
 import faq1 from "./faq1.jpg";
@@ -10,6 +10,9 @@ import ScrollableAnchor from 'react-scrollable-anchor';
 import { configureAnchors } from 'react-scrollable-anchor';
 import { Icon } from 'react-fa';
 import Drawer from 'material-ui/Drawer';
+import 'react-dates/initialize';
+import moment from 'moment';
+import { SingleDatePicker, isInclusivelyBeforeDay } from 'react-dates';
 class App extends Component
 {
     constructor()
@@ -21,6 +24,7 @@ class App extends Component
         {
             self.setState({ IGNOREMEFAM: "" });
         });
+        console.log(moment());
     }
     componentWillMount()
     {
@@ -31,7 +35,9 @@ class App extends Component
             blur_dir: 0,
             blur_min: 0,
             blur_max: 10,
-            blur_step: 2
+            blur_step: 2,
+            date_shown: null,
+            date_focused: false
         });
     }
     render()
@@ -52,7 +58,7 @@ class App extends Component
                     this.setState({ blur: this.state.blur - this.state.blur_step });
                 }, 1);
             }
-        }    
+        }
         return (
             <div>
                 <div style={{
@@ -107,7 +113,7 @@ class App extends Component
                         <h1 className="display-3" style={{ textAlign: "center", marginTop: "calc(50% - 400px)" }}>Questions? Comments? Concerns?</h1>
                         <p className="lead" style={{ textAlign: "center", marginLeft: "12%", width: "75%" }}>
                             HackSB is run by the <a href="https://sbcompsciclub.github.io/">South Brunswick Computer Science Club (CSC@SBHS)</a>, and the <a href="http://www.sbpl.info/">South Brunswick Public Library (SBPL)</a>.
-                        </p>                        
+                        </p>
                         <h1 style={{ textAlign: "center" }}>CSC@SBHS <small>Executive Board</small></h1>
                         <Button href="mailto:sbcompsciclub@gmail.com" outline color="success" style={{ marginLeft: "calc(50% - 150px)", borderTopLeftRadius: 100, borderBottomLeftRadius: 100, borderRight: 0 }}><Icon name="envelope" /> Email</Button>
                         <Button href="https://github.com/sbcompsciclub/" outline color="success" style={{ borderRadius: 0, borderLeft: 0, borderRight: 0 }}><Icon name="github" /> GitHub</Button>
@@ -121,25 +127,36 @@ class App extends Component
                 <Drawer docked={false} width="75%" open={this.state.drawer_right} openSecondary={false} onRequestChange={(open) => this.setState({ drawer_right: open, blur: this.state.blur_max - this.state.blur_step, blur_dir: 1 })}>
                     <div style={{ color: "white", width: "100%", paddingLeft: 20, paddingRight: 20 }}>
                         <Button color="danger" outline style={{ position: "absolute", right: 10, top: 10, borderRadius: 0, border: 0 }} onClick={(e) => this.setState({ drawer_right: false, blur: this.state.blur_max - this.state.blur_step, blur_dir: 1 })}><Icon name="times" /></Button>
-                        <h1 className="display-3" style={{ textAlign: "center", marginTop: "calc(50% - 400px)" }}>Register to HackSB</h1>                        
-                        <h1 style={{ textAlign: "center" }}>General <small>Information</small></h1>
-                        <InputGroup size="lg" style={{ width: "75%", marginLeft: "12%" }}>
-                            <InputGroupAddon style={{ backgroundColor: "rgba(0, 0, 0, 0.1)", color: "rgba(255, 255, 255, 0.75)" }}>First Name</InputGroupAddon>
-                            <Input style={{ backgroundColor: "rgba(0, 0, 0, 0)", color: "rgba(255, 255, 255, 1)" }} />
-                            <InputGroupAddon style={{ backgroundColor: "rgba(0, 0, 0, 0.1)", color: "rgba(255, 255, 255, 0.75)" }}>Last Name</InputGroupAddon>
-                            <Input style={{ backgroundColor: "rgba(0, 0, 0, 0)", color: "rgba(255, 255, 255, 1)" }} />
-                        </InputGroup>
-                        <InputGroup size="lg" style={{ width: "75%", marginLeft: "12%", marginTop: 10 }}>
-                            <InputGroupAddon style={{ backgroundColor: "rgba(0, 0, 0, 0.1)", color: "rgba(255, 255, 255, 0.75)" }}>Email</InputGroupAddon>
-                            <Input style={{ backgroundColor: "rgba(0, 0, 0, 0)", color: "rgba(255, 255, 255, 1)" }} />
-                        </InputGroup>                        
-                        <h1 style={{ textAlign: "center" }}>High <small>School</small></h1>
-                        <InputGroup size="lg" style={{ width: "75%", marginLeft: "12%" }}>
-                            <InputGroupAddon style={{ backgroundColor: "rgba(0, 0, 0, 0.1)", color: "rgba(255, 255, 255, 0.75)" }}>School</InputGroupAddon>
-                            <Input style={{ backgroundColor: "rgba(0, 0, 0, 0)", color: "rgba(255, 255, 255, 1)" }} />
-                        </InputGroup>
-                        <h1 style={{ textAlign: "center" }}>Review <small>and Submit</small></h1>
-                    </div>    
+                        <h1 className="display-3" style={{ textAlign: "center", marginTop: "calc(50% - 400px)" }}>Register to HackSB</h1>
+                        <h1 style={{ textAlign: "center" }}>Registration will open soon!</h1>
+
+                        {/*<Form style={{ width: "75%", marginLeft: "12%" }}>
+                            <h1 style={{ textAlign: "center" }}>General <small>Information</small></h1>
+                            <FormGroup row style={{ marginLeft: 10 }}>
+                                <Label for="form_first_name" sm={2}>First Name</Label>
+                                <Col sm={4}>
+                                    <Input id="form_first_name" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
+                                </Col>
+                                <Label for="form_last_name" sm={2}>Last Name</Label>
+                                <Col sm={4}>
+                                    <Input id="form_last_name" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row style={{ marginLeft: 10 }}>
+                                <Label for="form_email" sm={2}>Email</Label>
+                                <Col sm={10}>
+                                    <Input type="email" id="form_email" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row style={{ marginLeft: 10 }}>
+                                <Label for="form_dob" sm={2}>Date of Birth</Label>
+                                <Col sm={10}>
+                                    <Input id="form_dob" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
+                                </Col>
+                            </FormGroup>
+                            <h1 style={{ textAlign: "center" }}>Review <small>and Submit</small></h1>
+                        </Form>*/}
+                    </div>
                 </Drawer>
                 <div id="body-bottom" style={{ filter: "blur(" + this.state.blur + "px)" }}>
                     <Jumbotron style={{ paddingLeft: "10%", paddingRight: "10%", borderRadius: 0, backgroundColor: "rgba(0, 0, 0, 0.5)", height: window.innerHeight - 110 - 90, marginBottom: 0, textAlign: "center" }}>
@@ -210,13 +227,11 @@ class App extends Component
                             <CardImgOverlay style={{ backgroundColor: "rgba(0, 0, 0, 0.75)", margin: -1 }}>
                                 <CardTitle>What should I bring?</CardTitle>
                                 <CardText>
-                                    <ui>
-                                        <li>Laptop</li>
-                                        <li>Phone</li>
-                                        <li>Chargers</li>
-                                        <li>Powerstrips</li>
-                                        <li>Imagination</li>
-                                    </ui>
+                                    <li>Laptop</li>
+                                    <li>Phone</li>
+                                    <li>Chargers</li>
+                                    <li>Powerstrips</li>
+                                    <li>Imagination</li>
                                 </CardText>
                                 <CardText><small>Please avoid bringing weapons, alcohol, illegal drugs, or anything you wouldn't bring to school.</small></CardText>
                             </CardImgOverlay>
