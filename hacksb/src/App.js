@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Col, Label, Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, InputGroup, InputGroupAddon, Input } from 'reactstrap';
+import { Form, FormGroup, Col, Label, Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, InputGroup, InputGroupAddon, InputGroupButton, Input } from 'reactstrap';
 import logo from "./logo.png";
 import background from "./background.jpg";
 import faq1 from "./faq1.jpg";
@@ -11,8 +11,6 @@ import { configureAnchors } from 'react-scrollable-anchor';
 import { Icon } from 'react-fa';
 import Drawer from 'material-ui/Drawer';
 import 'react-dates/initialize';
-import moment from 'moment';
-import { SingleDatePicker, isInclusivelyBeforeDay } from 'react-dates';
 class App extends Component
 {
     constructor()
@@ -24,7 +22,6 @@ class App extends Component
         {
             self.setState({ IGNOREMEFAM: "" });
         });
-        console.log(moment());
     }
     componentWillMount()
     {
@@ -127,9 +124,33 @@ class App extends Component
                 <Drawer docked={false} width="75%" open={this.state.drawer_right} openSecondary={false} onRequestChange={(open) => this.setState({ drawer_right: open, blur: this.state.blur_max - this.state.blur_step, blur_dir: 1 })}>
                     <div style={{ color: "white", width: "100%", paddingLeft: 20, paddingRight: 20 }}>
                         <Button color="danger" outline style={{ position: "absolute", right: 10, top: 10, borderRadius: 0, border: 0 }} onClick={(e) => this.setState({ drawer_right: false, blur: this.state.blur_max - this.state.blur_step, blur_dir: 1 })}><Icon name="times" /></Button>
-                        <h1 className="display-3" style={{ textAlign: "center", marginTop: "calc(50% - 400px)" }}>Register to HackSB</h1>
-                        <h1 style={{ textAlign: "center" }}>Registration will open soon!</h1>
-
+                        <h1 className="display-3" style={{ textAlign: "center", marginTop: "calc(50% - 400px)" }}>Registration will open soon!</h1>
+                        <h1 style={{ textAlign: "center" }}>Subscribe to our mailing list!</h1>
+                        <Form style={{ width: "75%", marginLeft: "5%", marginTop: 20 }} onSubmit={(e) =>
+                        {
+                            alert(e);
+                        }}>
+                            <FormGroup row style={{ marginLeft: 10 }}>
+                                <Label for="form_first_name" sm={2} style={{ textAlign: "right" }}>First Name</Label>
+                                <Col sm={4}>
+                                    <Input type="required" id="form_first_name" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
+                                </Col>
+                                <Label for="form_last_name" sm={2} style={{ textAlign: "right" }}>Last Name</Label>
+                                <Col sm={4}>
+                                    <Input id="form_last_name" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row style={{ marginLeft: 10 }}>
+                                <Label for="form_email" sm={2} style={{ textAlign: "right" }}>Email</Label>
+                                <Col sm={10}>
+                                    <Input type="email" id="form_email" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
+                                </Col>
+                            </FormGroup>
+                            <div style={{ marginLeft: "7%", width: "100%", textAlign: "center" }}>
+                                <Button type="reset" color="danger" outline style={{ width: 75, borderTopLeftRadius: 100, borderTopRightRadius: 0, borderBottomLeftRadius: 100, borderBottomRightRadius: 0, borderRight: 0 }}>Clear</Button>
+                                <Button type="submit" color="success" value="ok" style={{ width: 150, borderTopLeftRadius: 0, borderTopRightRadius: 100, borderBottomLeftRadius: 0, borderBottomRightRadius: 100 }}>Subscribe</Button>
+                            </div>
+                        </Form>
                         {/*<Form style={{ width: "75%", marginLeft: "12%" }}>
                             <h1 style={{ textAlign: "center" }}>General <small>Information</small></h1>
                             <FormGroup row style={{ marginLeft: 10 }}>
@@ -162,9 +183,9 @@ class App extends Component
                     <Jumbotron style={{ paddingLeft: "10%", paddingRight: "10%", borderRadius: 0, backgroundColor: "rgba(0, 0, 0, 0.5)", height: window.innerHeight - 110 - 90, marginBottom: 0, textAlign: "center" }}>
                         <h1 className="display-3" style={{ textAlign: "center", marginTop: ((window.innerHeight - 110 - 90) / 2) - 200, color: "white" }}>HackSB Spring 2018</h1>
                         <h1 className="display-5" style={{ textAlign: "center", color: "white" }}>April 6th-7th, 2018</h1>
-                        <Button outline color="primary" style={{ marginTop: 100, borderRadius: 100 }} onClick={() => { this.setState({ drawer_left: true, blur: this.state.blur_min + this.state.blur_step, blur_dir: 0 }) }}><Icon name="chevron-left"/> Contact</Button>
+                        <Button outline color="primary" style={{ marginTop: 100, borderRadius: 100 }} onClick={() => { this.setState({ drawer_left: true, blur: this.state.blur_min + this.state.blur_step, blur_dir: 0 }) }}>{/*<Icon name="chevron-left"/>*/}Contact</Button>
                         <Button outline color="danger" href="#about" style={{ marginLeft: 10, marginRight: 10, marginTop: 150, borderRadius: 100 }}>Learn More <Icon name="chevron-down" /></Button>
-                        <Button outline color="primary" style={{ marginTop: 100, borderRadius: 100 }} onClick={() => { this.setState({ drawer_right: true, blur: this.state.blur_min + this.state.blur_step, blur_dir: 0 }) }}>Register <Icon name="chevron-right"/></Button>
+                        <Button outline color="primary" style={{ marginTop: 100, borderRadius: 100 }} onClick={() => { this.setState({ drawer_right: true, blur: this.state.blur_min + this.state.blur_step, blur_dir: 0 }) }}>Register{/*<Icon name="chevron-right"/>*/}</Button>
                     </Jumbotron>
                     <Jumbotron style={{ paddingLeft: "10%", paddingRight: "10%", borderRadius: 0, backgroundColor: "rgba(0, 0, 0, 0.25)", color: "white", marginBottom: 0, paddingBottom: 150 }}>
                         <ScrollableAnchor id="about">
