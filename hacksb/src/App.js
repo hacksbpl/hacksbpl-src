@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Col, Label, Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, InputGroup, InputGroupAddon, InputGroupButton, Input } from 'reactstrap';
+import { Form, FormGroup, Col, Label, Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, InputGroupAddon, InputGroupButton, Input } from 'reactstrap';
 import logo from "./logo.png";
 import background from "./background.jpg";
 import faq1 from "./faq1.jpg";
@@ -11,11 +11,15 @@ import { configureAnchors } from 'react-scrollable-anchor';
 import { Icon } from 'react-fa';
 import Drawer from 'material-ui/Drawer';
 import 'react-dates/initialize';
+import configuration from './configuration.json';
 class App extends Component
 {
     constructor()
     {
         super()
+        this.firebaseInitialize = this.firebaseInitialize.bind(this);
+        this.firebaseSetData = this.firebaseSetData.bind(this);
+        this.firebaseGetData = this.firebaseGetData.bind(this);
         configureAnchors({ offset: -60 });
         let self = this;
         window.addEventListener("resize", (e) =>
@@ -36,6 +40,19 @@ class App extends Component
             date_shown: null,
             date_focused: false
         });
+        this.firebaseInitialize(configuration);
+    }
+    firebaseInitialize(configuration)
+    {
+        window.dispatchEvent(new CustomEvent("_event_onInitializeFirebase", { detail: { configuration: configuration } }));
+    }
+    firebaseSetData(reference, data)
+    {
+        window.dispatchEvent(new CustomEvent("_event_onSetData", { detail: { reference: reference, data: data } }));
+    }
+    firebaseGetData(reference, callback)
+    {
+        window.dispatchEvent(new CustomEvent("_event_onGetData", { detail: { reference: reference, callback: callback } }));
     }
     render()
     {
@@ -128,7 +145,12 @@ class App extends Component
                         <h1 style={{ textAlign: "center" }}>Subscribe to our mailing list!</h1>
                         <Form style={{ width: "75%", marginLeft: "5%", marginTop: 20 }} onSubmit={(e) =>
                         {
-                            alert(e);
+                            let save = {
+                                first: document.getElementById("form_first_name").value,
+                                last: document.getElementById("form_last_name").value,
+                            }
+                            let email = document.getElementById("form_email").value;
+                            this.firebaseSetData("/subscriptions/" + email + "/", save);
                         }}>
                             <FormGroup row style={{ marginLeft: 10 }}>
                                 <Label for="form_first_name" sm={2} style={{ textAlign: "right" }}>First Name</Label>
