@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Col, Label, Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, InputGroupAddon, InputGroupButton, Input } from 'reactstrap';
+import { Form, FormGroup, Col, Label, Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, Input } from 'reactstrap';
 import logo from "./logo.png";
 import background from "./background.jpg";
 import faq1 from "./faq1.jpg";
@@ -19,6 +19,8 @@ class App extends Component
         super()
         this.firebaseInitialize = this.firebaseInitialize.bind(this);
         this.firebaseSetData = this.firebaseSetData.bind(this);
+        this.firebaseUpdateData = this.firebaseUpdateData.bind(this);
+        this.firebaseAppendData = this.firebaseAppendData.bind(this);
         this.firebaseGetData = this.firebaseGetData.bind(this);
         configureAnchors({ offset: -60 });
         let self = this;
@@ -31,8 +33,8 @@ class App extends Component
     {
         this.setState({
             drawer_left: false,
-            drawer_right: false,
-            blur: 0,
+            drawer_right: window.location.href.toLowerCase().includes("register"),
+            blur: (window.location.href.toLowerCase().includes("register") ? 10 : 0),
             blur_dir: 0,
             blur_min: 0,
             blur_max: 10,
@@ -49,6 +51,14 @@ class App extends Component
     firebaseSetData(reference, data)
     {
         window.dispatchEvent(new CustomEvent("_event_onSetData", { detail: { reference: reference, data: data } }));
+    }
+    firebaseAppendData(reference, data)
+    {
+        window.dispatchEvent(new CustomEvent("_event_onAppendData", { detail: { reference: reference, data: data } }));
+    }
+    firebaseUpdateData(reference, data)
+    {
+        window.dispatchEvent(new CustomEvent("_event_onUpdateData", { detail: { reference: reference, data: data } }));
     }
     firebaseGetData(reference, callback)
     {
@@ -148,9 +158,9 @@ class App extends Component
                             let save = {
                                 first: document.getElementById("form_first_name").value,
                                 last: document.getElementById("form_last_name").value,
-                            }
-                            let email = document.getElementById("form_email").value;
-                            this.firebaseSetData("/subscriptions/" + email + "/", save);
+                                email: document.getElementById("form_email").value
+                            };
+                            this.firebaseAppendData("/subscriptions/", save);
                         }}>
                             <FormGroup row style={{ marginLeft: 10 }}>
                                 <Label for="form_first_name" sm={2} style={{ textAlign: "right" }}>First Name</Label>

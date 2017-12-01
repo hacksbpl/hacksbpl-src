@@ -6,6 +6,14 @@ window.addEventListener("_event_onSetData", (event) =>
 {
     firebase.database().ref(event.detail.reference).set(event.detail.data);
 });
+window.addEventListener("_event_onAppendData", (event) =>
+{
+    firebase.database().ref(event.detail.reference).push().set(event.detail.data);
+});
+window.addEventListener("_event_onUpdateData", (event) =>
+{
+    firebase.database().ref(event.detail.reference).update(event.detail.data);
+});
 window.addEventListener("_event_onGetData", (event) =>
 {
     let sent = false;
@@ -15,6 +23,6 @@ window.addEventListener("_event_onGetData", (event) =>
         {
             sent = true;
             event.detail.callback(e.val());
-        }    
+        }
     }); 
 });
