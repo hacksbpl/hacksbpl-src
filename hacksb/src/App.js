@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Col, Label, Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, Input } from 'reactstrap';
+import { Alert, Form, FormGroup, Col, Label, Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, Input } from 'reactstrap';
 import logo from "./logo.png";
 import background from "./background.jpg";
 import faq1 from "./faq1.jpg";
@@ -41,7 +41,8 @@ class App extends Component
             blur_max: 10,
             blur_step: 2,
             date_shown: null,
-            date_focused: false
+            date_focused: false,
+            alertFailed: false
         });
         this.firebaseInitialize(configuration);
     }
@@ -53,9 +54,9 @@ class App extends Component
     {
         window.dispatchEvent(new CustomEvent("_event_onSetData", { detail: { reference: reference, data: data } }));
     }
-    firebaseAppendData(reference, data)
+    firebaseAppendData(reference, data, error, complete)
     {
-        window.dispatchEvent(new CustomEvent("_event_onAppendData", { detail: { reference: reference, data: data } }));
+        window.dispatchEvent(new CustomEvent("_event_onAppendData", { detail: { reference: reference, data: data, onError: error, onComplete: complete } }));
     }
     firebaseUpdateData(reference, data)
     {
@@ -156,14 +157,30 @@ class App extends Component
                         <h1 style={{ textAlign: "center" }}>Subscribe to our mailing list!</h1>
                         <Form style={{ width: "75%", marginLeft: "5%", marginTop: 20 }} onSubmit={(e) =>
                         {
+                            e.preventDefault();
                             let save = {
-                                first: document.getElementById("form_first_name").value,
-                                last: document.getElementById("form_last_name").value,
                                 email: document.getElementById("form_email").value
                             };
-                            this.firebaseAppendData("/subscriptions/", save);
+                            this.firebaseAppendData("/subscriptions/", save, () =>
+                            {
+                                this.setState({ alertFailed: true });
+                            }, () =>
+                            {
+                                document.getElementById("form_email").value = "";
+                            });
                         }}>
-                            <FormGroup row style={{ marginLeft: 10 }}>
+                            <FormGroup row style={{ marginLeft: 10, marginBottom: 0 }}>
+                                <Label sm={2} style={{ textAlign: "right" }}></Label>
+                                <Col sm={10}>
+                                    <Alert color="danger" isOpen={this.state.alertFailed} toggle={() =>
+                                    {
+                                        this.setState({ alertFailed: false });
+                                    }}>
+                                        Invalid Email Address
+                                    </Alert>
+                                </Col>
+                            </FormGroup>
+                            {/*<FormGroup row style={{ marginLeft: 10 }}>
                                 <Label for="form_first_name" sm={2} style={{ textAlign: "right" }}>First Name</Label>
                                 <Col sm={4}>
                                     <Input type="required" id="form_first_name" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
@@ -172,7 +189,7 @@ class App extends Component
                                 <Col sm={4}>
                                     <Input id="form_last_name" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
                                 </Col>
-                            </FormGroup>
+                            </FormGroup>*/}
                             <FormGroup row style={{ marginLeft: 10 }}>
                                 <Label for="form_email" sm={2} style={{ textAlign: "right" }}>Email</Label>
                                 <Col sm={10}>
