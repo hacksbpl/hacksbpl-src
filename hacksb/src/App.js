@@ -12,6 +12,7 @@ import { Icon } from 'react-fa';
 import Drawer from 'material-ui/Drawer';
 import 'react-dates/initialize';
 import configuration from './configuration.json';
+import sponsorsSbpl from './sponsors/sbpl.png';
 class App extends Component
 {
     constructor()
@@ -109,7 +110,7 @@ class App extends Component
                             <NavItem><NavLink href="#about">About</NavLink></NavItem>
                             <NavItem><NavLink href="#schedule">Schedule</NavLink></NavItem>
                         </Nav>
-                        <NavbarBrand href="#welcome" navbar style={{ /*position: "fixed", top: 0, left: "calc(50% - 100px)",*/ fontSize: 75, fontFamily: "mlh", maxHeight: 75 }}>
+                        <NavbarBrand href="#welcome" style={{ /*position: "fixed", top: 0, left: "calc(50% - 100px)",*/ fontSize: 75, fontFamily: "mlh", maxHeight: 75 }}>
                             <p style={{ position: "relative", display: "inline", top: -40 }}>Hack</p>
                             <img src={logo} alt="HackSB" style={{ position: "relative", width: 150, top: -42, marginLeft: -20 }} />
                         </NavbarBrand>
@@ -294,7 +295,12 @@ class App extends Component
                         <ScrollableAnchor id="sponsors">
                             <h1 className="display-3" style={{ paddingTop: 60 }}>Sponsors</h1>
                         </ScrollableAnchor>
-                        <h1 style={{ textAlign: "center" }}>Nothing to see here. Check again soon!</h1>
+                        <div style={{ textAlign: "center" }}>
+                            <h1 style={{ textAlign: "center" }}>Friends of SBPL</h1>
+                            <div style={{ display: "inline-block", backgroundColor: "white", width: 500 }}>
+                                <img src={sponsorsSbpl} style={{ width: "100%" }} />
+                            </div>    
+                        </div>    
                     </Jumbotron>
                     <Jumbotron style={{ paddingLeft: "10%", paddingRight: "10%", paddingTop: 20, paddingBottom: 10, borderRadius: 0, backgroundColor: "rgba(0, 0, 0, 0.25)", color: "rgba(255, 255, 255, 0.5)", marginBottom: 0, textAlign: "center" }}>
                         <p className="lead">Copyright © 2018 HackSB Team. All rights reserved.</p>
