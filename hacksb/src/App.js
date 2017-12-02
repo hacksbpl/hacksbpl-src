@@ -42,7 +42,8 @@ class App extends Component
             blur_step: 2,
             date_shown: null,
             date_focused: false,
-            alertFailed: false
+            alertFailed: false,
+            alertSuccess: false
         });
         this.firebaseInitialize(configuration);
     }
@@ -104,6 +105,12 @@ class App extends Component
                         <h1 className="display-2" style={{ color: "white", textAlign: "center", margin: 0 }}></h1>
                     </ScrollableAnchor>
                 </div>
+                <Alert color="success" isOpen={this.state.alertSuccess} style={{ position: "fixed", bottom: 0, width: "50%", left: "25%", height: 50, zIndex: 100 }} toggle={() =>
+                {
+                    this.setState({ alertSuccess: false });
+                }}>
+                    Success! We promise not to spam you :)    
+                </Alert>    
                 <Navbar id="body-nav" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)", filter: "blur(" + this.state.blur + "px)" }} inverse toggleable fixed="bottom" className="sticky-top">
                     <NavbarToggler />
                     <Collapse isOpen={true} navbar>
@@ -167,6 +174,12 @@ class App extends Component
                             }, () =>
                             {
                                 document.getElementById("form_email").value = "";
+                                this.setState({
+                                    alertSuccess: true,
+                                    drawer_right: false,
+                                    blur: this.state.blur_max - this.state.blur_step,
+                                    blur_dir: 1
+                                });
                             });
                         }}>
                             <FormGroup row style={{ marginLeft: 10, marginBottom: 0 }}>
@@ -235,7 +248,7 @@ class App extends Component
                         <h1 className="display-5" style={{ textAlign: "center", color: "white" }}>April 6th-7th, 2018</h1>
                         <Button outline color="primary" style={{ marginTop: 100, borderRadius: 100 }} onClick={() => { this.setState({ drawer_left: true, blur: this.state.blur_min + this.state.blur_step, blur_dir: 0 }) }}>{/*<Icon name="chevron-left"/>*/}Contact</Button>
                         <Button outline color="danger" href="#about" style={{ marginLeft: 10, marginRight: 10, marginTop: 150, borderRadius: 100 }}>Learn More <Icon name="chevron-down" /></Button>
-                        <Button outline color="primary" style={{ marginTop: 100, borderRadius: 100 }} onClick={() => { this.setState({ drawer_right: true, blur: this.state.blur_min + this.state.blur_step, blur_dir: 0 }) }}>Register{/*<Icon name="chevron-right"/>*/}</Button>
+                        <Button outline color="primary" style={{ marginTop: 100, borderRadius: 100 }} onClick={() => { this.setState({ drawer_right: true, blur: this.state.blur_min + this.state.blur_step, blur_dir: 0, alertSuccess: false }) }}>Register{/*<Icon name="chevron-right"/>*/}</Button>
                     </Jumbotron>
                     <Jumbotron style={{ paddingLeft: "10%", paddingRight: "10%", borderRadius: 0, backgroundColor: "rgba(0, 0, 0, 0.25)", color: "white", marginBottom: 0, paddingBottom: 150 }}>
                         <ScrollableAnchor id="about">
