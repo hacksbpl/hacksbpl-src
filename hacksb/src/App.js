@@ -126,7 +126,7 @@ class App extends Component
                             <NavItem><NavLink href="#faqs">FAQs</NavLink></NavItem>
                             <NavItem><NavLink href="#sponsors">Sponsors</NavLink></NavItem>
                         </Nav>
-                        <a id="mlh-trust-badge" style={{
+                        {/*<a id="mlh-trust-badge" style={{
                             display: "block",
                             maxWidth: 100,
                             minWidth: 60,
@@ -137,7 +137,7 @@ class App extends Component
                             zIndex: 10000
                         }} href="https://mlh.io/seasons/na-2018/events?utm_source=na-2018&utm_medium=TrustBadge&utm_campaign=na-2018&utm_content=red" target="_blank">
                             <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2018/red.svg" alt="Major League Hacking 2017 Hackathon Season" style={{ width: 100 }} />
-                        </a>
+                        </a>*/}
                     </Collapse>
                 </Navbar>
                 <Drawer docked={false} width="75%" open={this.state.drawer_left} openSecondary={true} onRequestChange={(open) => this.setState({ drawer_left: open, blur: this.state.blur_max - this.state.blur_step, blur_dir: 1 })}>
@@ -245,7 +245,7 @@ class App extends Component
                 <div id="body-bottom" style={{ filter: "blur(" + this.state.blur + "px)" }}>
                     <Jumbotron style={{ paddingLeft: "10%", paddingRight: "10%", borderRadius: 0, backgroundColor: "rgba(0, 0, 0, 0.5)", height: window.innerHeight - 110 - 90, marginBottom: 0, textAlign: "center" }}>
                         <h1 className="display-3" style={{ textAlign: "center", marginTop: ((window.innerHeight - 110 - 90) / 2) - 200, color: "white" }}>HackSB Spring 2018</h1>
-                        <h1 className="display-5" style={{ textAlign: "center", color: "white" }}>April 6th-7th, 2018</h1>
+                        <h1 className="display-5" style={{ textAlign: "center", color: "white" }}>Saturday, April 7th, 2018</h1>
                         <Button outline color="primary" style={{ marginTop: 100, borderRadius: 100 }} onClick={() => { this.setState({ drawer_left: true, blur: this.state.blur_min + this.state.blur_step, blur_dir: 0 }) }}>{/*<Icon name="chevron-left"/>*/}Contact</Button>
                         <Button outline color="danger" href="#about" style={{ marginLeft: 10, marginRight: 10, marginTop: 150, borderRadius: 100 }}>Learn More <Icon name="chevron-down" /></Button>
                         <Button outline color="primary" style={{ marginTop: 100, borderRadius: 100 }} onClick={() => { this.setState({ drawer_right: true, blur: this.state.blur_min + this.state.blur_step, blur_dir: 0, alertSuccess: false }) }}>Register{/*<Icon name="chevron-right"/>*/}</Button>
@@ -265,7 +265,7 @@ class App extends Component
                             HackSB?
                         </h1>
                         <p className="lead" style={{ textAlign: "justify", marginLeft: "20%", width: "50%" }}>
-                            HackSB is a 24-hour hackathon for high school students. We challenge you to create, innovate, and learn something awesome. Expand your skills and meet new friends!
+                            HackSB is a 12-hour hackathon for high school students, run by CSC@SBHS and SBPL. We challenge you to create, innovate, and learn something awesome. Expand your skills and meet new friends!
                         </p>
                         <h1 style={{ color: "rgba(26, 167, 245, 1)", paddingTop: 25, marginLeft: "30%", textAlign: "left" }}>
                             Where?
