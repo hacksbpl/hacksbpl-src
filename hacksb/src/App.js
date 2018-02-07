@@ -42,7 +42,12 @@ class App extends Component
             blur_step: 2,
             date_shown: null,
             date_focused: false,
-            alertFailed: false,
+            alertFailed_Email: false,
+            alertFailed_First: false,
+            alertFailed_Last: false,
+            alertFailed_DOB: false,
+            alertFailed_School: false,
+            alertFailed_Grade: false,
             alertSuccess: false
         });
         this.firebaseInitialize(configuration);
@@ -109,8 +114,8 @@ class App extends Component
                 {
                     this.setState({ alertSuccess: false });
                 }}>
-                    Success! We promise not to spam you :)    
-                </Alert>    
+                    Success! We promise not to spam you :)
+                </Alert>
                 <Navbar id="body-nav" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)", filter: "blur(" + this.state.blur + "px)" }} inverse toggleable fixed="bottom" className="sticky-top">
                     <NavbarToggler />
                     <Collapse isOpen={true} navbar>
@@ -160,17 +165,18 @@ class App extends Component
                 <Drawer docked={false} width="75%" open={this.state.drawer_right} openSecondary={false} onRequestChange={(open) => this.setState({ drawer_right: open, blur: this.state.blur_max - this.state.blur_step, blur_dir: 1 })}>
                     <div style={{ color: "white", width: "100%", paddingLeft: 20, paddingRight: 20 }}>
                         <Button color="danger" outline style={{ position: "absolute", right: 10, top: 10, borderRadius: 0, border: 0 }} onClick={(e) => this.setState({ drawer_right: false, blur: this.state.blur_max - this.state.blur_step, blur_dir: 1 })}><Icon name="times" /></Button>
-                        <h1 className="display-3" style={{ textAlign: "center", marginTop: "calc(50% - 400px)" }}>Registration will open soon!</h1>
-                        <h1 style={{ textAlign: "center" }}>Subscribe to our mailing list!</h1>
-                        <Form style={{ width: "75%", marginLeft: "5%", marginTop: 20 }} onSubmit={(e) =>
+                        <h1 className="display-3" style={{ textAlign: "center", marginTop: "calc(50% - 400px)" }}>Register for HackSB</h1>
+                        <Form style={{ width: "80%", marginLeft: "10%", paddingTop: 20 }} onSubmit={(e) =>
                         {
                             e.preventDefault();
                             let save = {
                                 email: document.getElementById("form_email").value
                             };
-                            this.firebaseAppendData("/subscriptions/", save, () =>
+                            this.firebaseAppendData("/registrations/", save, () =>
                             {
-                                this.setState({ alertFailed: true });
+                                this.setState({
+                                    alertFailed_Email: (document.getElementById("form_email").value == "") ? true : false
+                                });
                             }, () =>
                             {
                                 document.getElementById("form_email").value = "";
@@ -182,17 +188,6 @@ class App extends Component
                                 });
                             });
                         }}>
-                            <FormGroup row style={{ marginLeft: 10, marginBottom: 0 }}>
-                                <Label sm={2} style={{ textAlign: "right" }}></Label>
-                                <Col sm={10}>
-                                    <Alert color="danger" isOpen={this.state.alertFailed} toggle={() =>
-                                    {
-                                        this.setState({ alertFailed: false });
-                                    }}>
-                                        Invalid Email Address
-                                    </Alert>
-                                </Col>
-                            </FormGroup>
                             {/*<FormGroup row style={{ marginLeft: 10 }}>
                                 <Label for="form_first_name" sm={2} style={{ textAlign: "right" }}>First Name</Label>
                                 <Col sm={4}>
@@ -202,16 +197,73 @@ class App extends Component
                                 <Col sm={4}>
                                     <Input id="form_last_name" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
                                 </Col>
-                            </FormGroup>*/}
+                            </FormGroup>
+                            <FormGroup row style={{ marginLeft: 10 }}>
+                                <Label for="form_email" sm={2} style={{ textAlign: "right" }}>First Name</Label>
+                                <Col sm={4}>
+                                    <Input type="email" id="form_email" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
+                                </Col>
+                                <Label for="form_email" sm={1} style={{ textAlign: "left" }}>Last Name</Label>
+                                <Col sm={5}>
+                                    <Input type="email" id="form_email" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
+                                </Col>
+                            </FormGroup>
                             <FormGroup row style={{ marginLeft: 10 }}>
                                 <Label for="form_email" sm={2} style={{ textAlign: "right" }}>Email</Label>
                                 <Col sm={10}>
                                     <Input type="email" id="form_email" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
                                 </Col>
                             </FormGroup>
-                            <div style={{ marginLeft: "7%", width: "100%", textAlign: "center" }}>
+                            <FormGroup row style={{ marginLeft: 10 }}>
+                                <Label for="form_email" sm={2} style={{ textAlign: "right" }}>High School</Label>
+                                <Col sm={10}>
+                                    <Input type="email" id="form_email" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
+                                </Col>
+                            </FormGroup>*/}
+                            <h1 style={{ textAlign: "center" }}>General <small>Information</small></h1>
+                            <FormGroup row style={{ marginLeft: 0 }}>
+                                <Label for="form_first_name" sm={1.5} style={{ textAlign: "right" }}>First Name</Label>
+                                <Col sm={4.5}>
+                                    <Input id="form_first_name" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
+                                </Col>
+                                <Label for="form_last_name" sm={1.5} style={{ textAlign: "right" }}>Last Name</Label>
+                                <Col sm={4.5}>
+                                    <Input id="form_last_name" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row style={{ marginLeft: 0 }}>
+                                <Label for="form_email" style={{ textAlign: "right" }} sm={1.5}><div style={{ width: 76 }}>Email</div></Label>
+                                <Col sm={7}>
+                                    <Input type="email" id="form_email" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
+                                </Col>
+                                <Label for="form_dob" sm={1.5} style={{ textAlign: "right" }}>Date of Birth</Label>
+                                <Col sm={3.5}>
+                                    <Input id="form_dob" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
+                                </Col>
+                            </FormGroup>
+                            <Alert color="danger" isOpen={this.state.alertFailed_Email} toggle={() =>
+                            {
+                                this.setState({ alertFailed_Email: false });
+                            }}>
+                                Invalid Email Address
+                            </Alert>
+                            <h1 style={{ textAlign: "center" }}>School <small>Information</small></h1>
+                            <FormGroup row style={{ marginLeft: 0 }}>
+                                <Label for="form_school" sm={1.5} style={{ textAlign: "right" }}><div style={{ width: 76 }}>School</div></Label>
+                                <Col sm={4.5}>
+                                    <Input id="form_school" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row style={{ marginLeft: 0 }}>
+                                <Label for="form_grade" sm={1.5} style={{ textAlign: "right" }}><div style={{ width: 76 }}>Grade</div></Label>
+                                <Col sm={4.5}>
+                                    <Input id="form_grade" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
+                                </Col>
+                            </FormGroup>
+                            <h1 style={{ textAlign: "center" }}>Review <small>and Submit</small></h1>
+                            <div style={{ marginLeft: "10%", width: "80%", textAlign: "center" }}>
                                 <Button type="reset" color="danger" outline style={{ width: 75, borderTopLeftRadius: 100, borderTopRightRadius: 0, borderBottomLeftRadius: 100, borderBottomRightRadius: 0, borderRight: 0 }}>Clear</Button>
-                                <Button type="submit" color="success" value="ok" style={{ width: 150, borderTopLeftRadius: 0, borderTopRightRadius: 100, borderBottomLeftRadius: 0, borderBottomRightRadius: 100 }}>Subscribe</Button>
+                                <Button type="submit" color="success" value="ok" style={{ width: 125, borderTopLeftRadius: 0, borderTopRightRadius: 100, borderBottomLeftRadius: 0, borderBottomRightRadius: 100 }}>Register</Button>
                             </div>
                         </Form>
                         {/*<Form style={{ width: "75%", marginLeft: "12%" }}>
@@ -271,7 +323,7 @@ class App extends Component
                             Where?
                         </h1>
                         <p className="lead" style={{ textAlign: "justify", marginLeft: "30%", width: "40%" }}>
-                            South Brunswick Public Library:<br/><i>110 Kingston Ln, Monmouth Junction, NJ 08852</i>
+                            South Brunswick Public Library:<br /><i>110 Kingston Ln, Monmouth Junction, NJ 08852</i>
                         </p>
                     </Jumbotron>
                     <Jumbotron style={{ paddingLeft: "10%", paddingRight: "10%", borderRadius: 0, backgroundColor: "rgba(0, 0, 0, 1)", color: "white", marginBottom: 0, paddingBottom: 125 }}>
@@ -329,8 +381,8 @@ class App extends Component
                             <h1 style={{ textAlign: "center" }}>Friends of SBPL</h1>
                             <div style={{ display: "inline-block", backgroundColor: "white", width: 500 }}>
                                 <img src={sponsorsSbpl} style={{ width: "100%" }} />
-                            </div>    
-                        </div>    
+                            </div>
+                        </div>
                     </Jumbotron>
                     <Jumbotron style={{ paddingLeft: "10%", paddingRight: "10%", paddingTop: 20, paddingBottom: 10, borderRadius: 0, backgroundColor: "rgba(0, 0, 0, 0.25)", color: "rgba(255, 255, 255, 0.5)", marginBottom: 0, textAlign: "center" }}>
                         <p className="lead">Copyright © 2018 HackSB Team. All rights reserved.</p>
