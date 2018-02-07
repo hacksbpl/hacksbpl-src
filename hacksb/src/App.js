@@ -42,6 +42,7 @@ class App extends Component
             blur_step: 2,
             date_shown: null,
             date_focused: false,
+
             alertFailed_Email: false,
             alertFailed_First: false,
             alertFailed_Last: false,
@@ -175,18 +176,23 @@ class App extends Component
                             this.firebaseAppendData("/registrations/", save, () =>
                             {
                                 this.setState({
-                                    alertFailed_Email: (document.getElementById("form_email").value == "") ? true : false
+                                    alertFailed_Email: (document.getElementById("form_email").value == "") ? true : false,
+                                    alertFailed_First: (document.getElementById("form_first_name").value == "") ? true : false,
+                                    alertFailed_Last: (document.getElementById("form_last_name").value == "") ? true : false,
+                                    alertFailed_DOB: (document.getElementById("form_dob").value == "") ? true : false,
+                                    alertFailed_School: (document.getElementById("form_school").value == "") ? true : false,
+                                    alertFailed_Grade: (document.getElementById("form_grade").value == "") ? true : false
                                 });
                             }, () =>
-                            {
-                                document.getElementById("form_email").value = "";
-                                this.setState({
-                                    alertSuccess: true,
-                                    drawer_right: false,
-                                    blur: this.state.blur_max - this.state.blur_step,
-                                    blur_dir: 1
+                                {
+                                    document.getElementById("form_email").value = "";
+                                    this.setState({
+                                        alertSuccess: true,
+                                        drawer_right: false,
+                                        blur: this.state.blur_max - this.state.blur_step,
+                                        blur_dir: 1
+                                    });
                                 });
-                            });
                         }}>
                             {/*<FormGroup row style={{ marginLeft: 10 }}>
                                 <Label for="form_first_name" sm={2} style={{ textAlign: "right" }}>First Name</Label>
@@ -231,6 +237,18 @@ class App extends Component
                                     <Input id="form_last_name" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
                                 </Col>
                             </FormGroup>
+                            <Alert color="danger" isOpen={this.state.alertFailed_First} toggle={() =>
+                            {
+                                this.setState({ alertFailed_First: false });
+                            }}>
+                                Invalid First Name
+                            </Alert>
+                            <Alert color="danger" isOpen={this.state.alertFailed_Last} toggle={() =>
+                            {
+                                this.setState({ alertFailed_Last: false });
+                            }}>
+                                Invalid Last Name
+                            </Alert>
                             <FormGroup row style={{ marginLeft: 0 }}>
                                 <Label for="form_email" style={{ textAlign: "right" }} sm={1.5}><div style={{ width: 76 }}>Email</div></Label>
                                 <Col sm={7}>
@@ -238,7 +256,7 @@ class App extends Component
                                 </Col>
                                 <Label for="form_dob" sm={1.5} style={{ textAlign: "right" }}>Date of Birth</Label>
                                 <Col sm={3.5}>
-                                    <Input id="form_dob" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
+                                    <Input id="form_dob" type="date" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
                                 </Col>
                             </FormGroup>
                             <Alert color="danger" isOpen={this.state.alertFailed_Email} toggle={() =>
@@ -247,6 +265,12 @@ class App extends Component
                             }}>
                                 Invalid Email Address
                             </Alert>
+                            <Alert color="danger" isOpen={this.state.alertFailed_DOB} toggle={() =>
+                            {
+                                this.setState({ alertFailed_DOB: false });
+                            }}>
+                                Invalid Date of Birth
+                            </Alert>
                             <h1 style={{ textAlign: "center" }}>School <small>Information</small></h1>
                             <FormGroup row style={{ marginLeft: 0 }}>
                                 <Label for="form_school" sm={1.5} style={{ textAlign: "right" }}><div style={{ width: 76 }}>School</div></Label>
@@ -254,12 +278,30 @@ class App extends Component
                                     <Input id="form_school" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
                                 </Col>
                             </FormGroup>
+                            <Alert color="danger" isOpen={this.state.alertFailed_School} toggle={() =>
+                            {
+                                this.setState({ alertFailed_School: false });
+                            }}>
+                                Invalid School
+                            </Alert>
                             <FormGroup row style={{ marginLeft: 0 }}>
                                 <Label for="form_grade" sm={1.5} style={{ textAlign: "right" }}><div style={{ width: 76 }}>Grade</div></Label>
                                 <Col sm={4.5}>
-                                    <Input id="form_grade" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
+                                    <Input id="form_grade" type="select" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }}>
+                                        <option style={{ color: "black" }}></option>
+                                        <option style={{ color: "black" }}>9</option>
+                                        <option style={{ color: "black" }}>10</option>
+                                        <option style={{ color: "black" }}>11</option>
+                                        <option style={{ color: "black" }}>12</option>
+                                    </Input>
                                 </Col>
                             </FormGroup>
+                            <Alert color="danger" isOpen={this.state.alertFailed_Grade} toggle={() =>
+                            {
+                                this.setState({ alertFailed_Grade: false });
+                            }}>
+                                Invalid Grade
+                            </Alert>
                             <h1 style={{ textAlign: "center" }}>Review <small>and Submit</small></h1>
                             <div style={{ marginLeft: "10%", width: "80%", textAlign: "center" }}>
                                 <Button type="reset" color="danger" outline style={{ width: 75, borderTopLeftRadius: 100, borderTopRightRadius: 0, borderBottomLeftRadius: 100, borderBottomRightRadius: 0, borderRight: 0 }}>Clear</Button>
