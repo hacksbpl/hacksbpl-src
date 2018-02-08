@@ -115,7 +115,7 @@ class App extends Component
                 {
                     this.setState({ alertSuccess: false });
                 }}>
-                    Success! We promise not to spam you :)
+                    Success! You have been registered for the hackathon!
                 </Alert>
                 <Navbar id="body-nav" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)", filter: "blur(" + this.state.blur + "px)" }} inverse toggleable fixed="bottom" className="sticky-top">
                     <NavbarToggler />
@@ -171,7 +171,12 @@ class App extends Component
                         {
                             e.preventDefault();
                             let save = {
-                                email: document.getElementById("form_email").value
+                                email: document.getElementById("form_email").value,
+                                first: document.getElementById("form_first_name").value,
+                                last: document.getElementById("form_last_name").value,
+                                dob: document.getElementById("form_dob").value,
+                                school: document.getElementById("form_school").value,
+                                grade: document.getElementById("form_grade").value
                             };
                             this.firebaseAppendData("/registrations/", save, () =>
                             {
@@ -251,11 +256,11 @@ class App extends Component
                             </Alert>
                             <FormGroup row style={{ marginLeft: 0 }}>
                                 <Label for="form_email" style={{ textAlign: "right" }} sm={1.5}><div style={{ width: 76 }}>Email</div></Label>
-                                <Col sm={7}>
+                                <Col sm={2.5}>
                                     <Input type="email" id="form_email" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
                                 </Col>
                                 <Label for="form_dob" sm={1.5} style={{ textAlign: "right" }}>Date of Birth</Label>
-                                <Col sm={3.5}>
+                                <Col sm={3}>
                                     <Input id="form_dob" type="date" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
                                 </Col>
                             </FormGroup>
