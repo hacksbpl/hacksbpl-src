@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Form, FormGroup, Col, Label, Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, Input } from 'reactstrap';
+import { Alert, Form, FormGroup, Col, Label, Navbar, FormText, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, Input } from 'reactstrap';
 import logo from "./logo.png";
 import background from "./background.jpg";
 import faq1 from "./faq1.jpg";
@@ -178,15 +178,16 @@ class App extends Component
                                 school: document.getElementById("form_school").value,
                                 grade: document.getElementById("form_grade").value
                             };
+                            console.log(document.getElementById("form_dob"));
                             this.firebaseAppendData("/registrations/", save, () =>
                             {
                                 this.setState({
-                                    alertFailed_Email: (document.getElementById("form_email").value == "") ? true : false,
-                                    alertFailed_First: (document.getElementById("form_first_name").value == "") ? true : false,
-                                    alertFailed_Last: (document.getElementById("form_last_name").value == "") ? true : false,
-                                    alertFailed_DOB: (document.getElementById("form_dob").value == "") ? true : false,
-                                    alertFailed_School: (document.getElementById("form_school").value == "") ? true : false,
-                                    alertFailed_Grade: (document.getElementById("form_grade").value == "") ? true : false
+                                    alertFailed_Email: (document.getElementById("form_email").value === "") ? true : false,
+                                    alertFailed_First: (document.getElementById("form_first_name").value === "") ? true : false,
+                                    alertFailed_Last: (document.getElementById("form_last_name").value === "") ? true : false,
+                                    alertFailed_DOB: !(document.getElementById("form_dob").value),
+                                    alertFailed_School: (document.getElementById("form_school").value === "") ? true : false,
+                                    alertFailed_Grade: (document.getElementById("form_grade").value === "") ? true : false
                                 });
                             }, () =>
                                 {
@@ -199,38 +200,6 @@ class App extends Component
                                     });
                                 });
                         }}>
-                            {/*<FormGroup row style={{ marginLeft: 10 }}>
-                                <Label for="form_first_name" sm={2} style={{ textAlign: "right" }}>First Name</Label>
-                                <Col sm={4}>
-                                    <Input type="required" id="form_first_name" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
-                                </Col>
-                                <Label for="form_last_name" sm={2} style={{ textAlign: "right" }}>Last Name</Label>
-                                <Col sm={4}>
-                                    <Input id="form_last_name" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row style={{ marginLeft: 10 }}>
-                                <Label for="form_email" sm={2} style={{ textAlign: "right" }}>First Name</Label>
-                                <Col sm={4}>
-                                    <Input type="email" id="form_email" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
-                                </Col>
-                                <Label for="form_email" sm={1} style={{ textAlign: "left" }}>Last Name</Label>
-                                <Col sm={5}>
-                                    <Input type="email" id="form_email" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row style={{ marginLeft: 10 }}>
-                                <Label for="form_email" sm={2} style={{ textAlign: "right" }}>Email</Label>
-                                <Col sm={10}>
-                                    <Input type="email" id="form_email" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row style={{ marginLeft: 10 }}>
-                                <Label for="form_email" sm={2} style={{ textAlign: "right" }}>High School</Label>
-                                <Col sm={10}>
-                                    <Input type="email" id="form_email" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} required/>
-                                </Col>
-                            </FormGroup>*/}
                             <h1 style={{ textAlign: "center" }}>General <small>Information</small></h1>
                             <FormGroup row style={{ marginLeft: 0 }}>
                                 <Label for="form_first_name" sm={1.5} style={{ textAlign: "right" }}>First Name</Label>
@@ -259,9 +228,15 @@ class App extends Component
                                 <Col sm={2.5}>
                                     <Input type="email" id="form_email" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
                                 </Col>
-                                <Label for="form_dob" sm={1.5} style={{ textAlign: "right" }}>Date of Birth</Label>
-                                <Col sm={3}>
-                                    <Input id="form_dob" type="date" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
+                                <Label for="form_grade" sm={0.5} style={{ textAlign: "right" }}>Grade</Label>
+                                <Col sm={2}>
+                                    <Input id="form_grade" type="select" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }}>
+                                        <option style={{ color: "black" }}></option>
+                                        <option style={{ color: "black" }}>9</option>
+                                        <option style={{ color: "black" }}>10</option>
+                                        <option style={{ color: "black" }}>11</option>
+                                        <option style={{ color: "black" }}>12</option>
+                                    </Input>
                                 </Col>
                             </FormGroup>
                             <Alert color="danger" isOpen={this.state.alertFailed_Email} toggle={() =>
@@ -270,13 +245,12 @@ class App extends Component
                             }}>
                                 Invalid Email Address
                             </Alert>
-                            <Alert color="danger" isOpen={this.state.alertFailed_DOB} toggle={() =>
+                            <Alert color="danger" isOpen={this.state.alertFailed_Grade} toggle={() =>
                             {
-                                this.setState({ alertFailed_DOB: false });
+                                this.setState({ alertFailed_Grade: false });
                             }}>
-                                Invalid Date of Birth
+                                Invalid Grade
                             </Alert>
-                            <h1 style={{ textAlign: "center" }}>School <small>Information</small></h1>
                             <FormGroup row style={{ marginLeft: 0 }}>
                                 <Label for="form_school" sm={1.5} style={{ textAlign: "right" }}><div style={{ width: 76 }}>School</div></Label>
                                 <Col sm={4.5}>
@@ -289,56 +263,27 @@ class App extends Component
                             }}>
                                 Invalid School
                             </Alert>
-                            <FormGroup row style={{ marginLeft: 0 }}>
-                                <Label for="form_grade" sm={1.5} style={{ textAlign: "right" }}><div style={{ width: 76 }}>Grade</div></Label>
-                                <Col sm={4.5}>
-                                    <Input id="form_grade" type="select" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }}>
-                                        <option style={{ color: "black" }}></option>
-                                        <option style={{ color: "black" }}>9</option>
-                                        <option style={{ color: "black" }}>10</option>
-                                        <option style={{ color: "black" }}>11</option>
-                                        <option style={{ color: "black" }}>12</option>
-                                    </Input>
-                                </Col>
-                            </FormGroup>
-                            <Alert color="danger" isOpen={this.state.alertFailed_Grade} toggle={() =>
+                            <h1 style={{ textAlign: "center" }}><small>Review and</small> Submit</h1>
+                            <FormText color="muted" style={{ textAlign: "justify" }}>
+                                Checkin time will be between 10:00 AM and 11:00 AM; any teen not registered can take any unclaimed spot during the open walkin time from 10:30 AM to 11:00 AM. HackSB will be happening from 11:00 AM to 9:30 PM. Project judging begins at 9:30 PM; prizes will be awarded by 10:30 PM.
+                                By submitting this registration form, you agree to abide by all HackSB procedures and rules.
+                            </FormText>
+                            <FormText style={{ textAlign: "center" }}>
+                                <ul>
+                                    <Input id="form_dob" type="checkbox" /> I hereby certify that the above information is correct. I understand that my registration slot is only gauranteed before 10:30 AM.
+                                </ul>    
+                            </FormText>
+                            <Alert color="danger" isOpen={this.state.alertFailed_DOB} toggle={() =>
                             {
-                                this.setState({ alertFailed_Grade: false });
+                                this.setState({ alertFailed_DOB: false });
                             }}>
-                                Invalid Grade
+                                So close!
                             </Alert>
-                            <h1 style={{ textAlign: "center" }}>Review <small>and Submit</small></h1>
-                            <div style={{ marginLeft: "10%", width: "80%", textAlign: "center" }}>
+                            <div style={{ marginLeft: "10%", marginTop: 10, width: "80%", textAlign: "center" }}>
                                 <Button type="reset" color="danger" outline style={{ width: 75, borderTopLeftRadius: 100, borderTopRightRadius: 0, borderBottomLeftRadius: 100, borderBottomRightRadius: 0, borderRight: 0 }}>Clear</Button>
                                 <Button type="submit" color="success" value="ok" style={{ width: 125, borderTopLeftRadius: 0, borderTopRightRadius: 100, borderBottomLeftRadius: 0, borderBottomRightRadius: 100 }}>Register</Button>
                             </div>
                         </Form>
-                        {/*<Form style={{ width: "75%", marginLeft: "12%" }}>
-                            <h1 style={{ textAlign: "center" }}>General <small>Information</small></h1>
-                            <FormGroup row style={{ marginLeft: 10 }}>
-                                <Label for="form_first_name" sm={2}>First Name</Label>
-                                <Col sm={4}>
-                                    <Input id="form_first_name" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
-                                </Col>
-                                <Label for="form_last_name" sm={2}>Last Name</Label>
-                                <Col sm={4}>
-                                    <Input id="form_last_name" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row style={{ marginLeft: 10 }}>
-                                <Label for="form_email" sm={2}>Email</Label>
-                                <Col sm={10}>
-                                    <Input type="email" id="form_email" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row style={{ marginLeft: 10 }}>
-                                <Label for="form_dob" sm={2}>Date of Birth</Label>
-                                <Col sm={10}>
-                                    <Input id="form_dob" style={{ backgroundColor: "rgba(255, 255, 255, 0.10)", color: "rgba(255, 255, 255, 1)" }} />
-                                </Col>
-                            </FormGroup>
-                            <h1 style={{ textAlign: "center" }}>Review <small>and Submit</small></h1>
-                        </Form>*/}
                     </div>
                 </Drawer>
                 <div id="body-bottom" style={{ filter: "blur(" + this.state.blur + "px)" }}>
