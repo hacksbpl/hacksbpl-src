@@ -49,7 +49,9 @@ class App extends Component
             alertFailed_DOB: false,
             alertFailed_School: false,
             alertFailed_Grade: false,
-            alertSuccess: false
+            alertSuccess: false,
+
+            input_dob: false
         });
         this.firebaseInitialize(configuration);
     }
@@ -174,31 +176,45 @@ class App extends Component
                                 email: document.getElementById("form_email").value,
                                 first: document.getElementById("form_first_name").value,
                                 last: document.getElementById("form_last_name").value,
-                                dob: document.getElementById("form_dob").value,
                                 school: document.getElementById("form_school").value,
                                 grade: document.getElementById("form_grade").value
                             };
                             console.log(document.getElementById("form_dob"));
-                            this.firebaseAppendData("/registrations/", save, () =>
+                            let failed = () =>
                             {
                                 this.setState({
                                     alertFailed_Email: (document.getElementById("form_email").value === "") ? true : false,
                                     alertFailed_First: (document.getElementById("form_first_name").value === "") ? true : false,
                                     alertFailed_Last: (document.getElementById("form_last_name").value === "") ? true : false,
-                                    alertFailed_DOB: !(document.getElementById("form_dob").value),
+                                    alertFailed_DOB: !(this.state.input_dob),
                                     alertFailed_School: (document.getElementById("form_school").value === "") ? true : false,
                                     alertFailed_Grade: (document.getElementById("form_grade").value === "") ? true : false
                                 });
-                            }, () =>
+                            };
+                            if (this.state.input_dob)
+                            {
+                                this.firebaseAppendData("/registrations/", save, () =>
                                 {
-                                    document.getElementById("form_email").value = "";
-                                    this.setState({
-                                        alertSuccess: true,
-                                        drawer_right: false,
-                                        blur: this.state.blur_max - this.state.blur_step,
-                                        blur_dir: 1
+                                    failed();
+                                }, () =>
+                                    {
+                                        document.getElementById("form_email").value = "";
+                                        document.getElementById("form_first_name").value = "";
+                                        document.getElementById("form_last_name").value = "";
+                                        document.getElementById("form_school").value = "";
+                                        document.getElementById("form_grade").value = "";
+                                        this.setState({
+                                            alertSuccess: true,
+                                            drawer_right: false,
+                                            blur: this.state.blur_max - this.state.blur_step,
+                                            blur_dir: 1
+                                        });
                                     });
-                                });
+                            }
+                            else
+                            {
+                                failed();
+                            }    
                         }}>
                             <h1 style={{ textAlign: "center" }}>General <small>Information</small></h1>
                             <FormGroup row style={{ marginLeft: 0 }}>
@@ -270,7 +286,7 @@ class App extends Component
                             </FormText>
                             <FormText style={{ textAlign: "center" }}>
                                 <ul>
-                                    <Input id="form_dob" type="checkbox" /> I hereby certify that the above information is correct. I understand that my registration slot is only gauranteed before 10:30 AM.
+                                    <Input id="form_dob" type="checkbox" onChange={(e) => { this.setState({ input_dob: !this.state.input_dob }) }} /> I hereby certify that the above information is correct. I understand that my registration slot is only gauranteed before 10:30 AM.
                                 </ul>    
                             </FormText>
                             <Alert color="danger" isOpen={this.state.alertFailed_DOB} toggle={() =>
