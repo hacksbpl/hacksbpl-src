@@ -207,7 +207,9 @@ class App extends Component
                                             alertSuccess: true,
                                             drawer_right: false,
                                             blur: this.state.blur_max - this.state.blur_step,
-                                            blur_dir: 1
+                                            blur_dir: 1,
+                                            input_dob: false,
+                                            alertFailed_DOB: false
                                         });
                                     });
                             }
@@ -286,7 +288,7 @@ class App extends Component
                             </FormText>
                             <FormText style={{ textAlign: "center" }}>
                                 <ul>
-                                    <Input id="form_dob" type="checkbox" onChange={(e) => { this.setState({ input_dob: !this.state.input_dob }) }} /> I hereby certify that the above information is correct. I understand that my registration slot is only gauranteed before 10:30 AM.
+                                    <Input id="form_dob" type="checkbox" checked={this.state.input_dob} onChange={(e) => { this.setState({ input_dob: !this.state.input_dob }) }} /> I hereby certify that the above information is correct. I understand that my registration slot is only gauranteed before 10:30 AM.
                                 </ul>    
                             </FormText>
                             <Alert color="danger" isOpen={this.state.alertFailed_DOB} toggle={() =>
