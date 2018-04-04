@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Form, FormGroup, Col, Label, Navbar, FormText, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, Input } from 'reactstrap';
+import { Alert, Form, FormGroup, Container, Row, Col, Label, Navbar, FormText, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler, Jumbotron, Button, Card, CardTitle, CardText, CardImg, CardImgOverlay, Input } from 'reactstrap';
 import logo from "./logo.png";
 import background from "./background.jpg";
 import faq1 from "./faq1.jpg";
@@ -13,6 +13,9 @@ import Drawer from 'material-ui/Drawer';
 import 'react-dates/initialize';
 import configuration from './configuration.json';
 import sponsorsSbpl from './sponsors/sbpl.png';
+import sponsorsBloomberg from './sponsors/bloomberg.png';
+import sponsorsSaberpoint from './sponsors/saberpoint.png';
+import sponsorsNJCLC from './sponsors/njclc.png';
 class App extends Component
 {
     constructor()
@@ -50,6 +53,8 @@ class App extends Component
             alertFailed_School: false,
             alertFailed_Grade: false,
             alertSuccess: false,
+            
+            tip: false,
 
             input_dob: false
         });
@@ -168,7 +173,13 @@ class App extends Component
                 <Drawer docked={false} width="75%" open={this.state.drawer_right} openSecondary={false} onRequestChange={(open) => this.setState({ drawer_right: open, blur: this.state.blur_max - this.state.blur_step, blur_dir: 1 })}>
                     <div style={{ color: "white", width: "100%", paddingLeft: 20, paddingRight: 20 }}>
                         <Button color="danger" outline style={{ position: "absolute", right: 10, top: 10, borderRadius: 0, border: 0 }} onClick={(e) => this.setState({ drawer_right: false, blur: this.state.blur_max - this.state.blur_step, blur_dir: 1 })}><Icon name="times" /></Button>
-                        <h1 className="display-3" style={{ textAlign: "center", marginTop: "calc(50% - 400px)" }}>Register for HackSB</h1>
+                        <h1 className="display-3" style={{ textAlign: "center", marginTop: "calc(50% - 400px)" }}>Ohhhh Snap!</h1>
+                        <Alert color="danger" style={{ marginTop: 25 }}>
+                            <h4 className="alert-heading">Well this is awkward, but registration is closed.</h4>
+                            <p>
+                                But have no fear. We will still be accepting walk-in registrations from 10:30 AM. We offer it on a <span title="First in first out order" id="lol"><i>FIFO queue</i></span> at the door, so be sure to come as early as possible ;). 
+                            </p>
+                        </Alert>
                         <Form style={{ width: "80%", marginLeft: "10%", paddingTop: 20 }} onSubmit={(e) =>
                         {
                             e.preventDefault();
@@ -218,7 +229,7 @@ class App extends Component
                                 failed();
                             }    
                         }}>
-                            <h1 style={{ textAlign: "center" }}>General <small>Information</small></h1>
+                            {/*<h1 style={{ textAlign: "center" }}>General <small>Information</small></h1>
                             <FormGroup row style={{ marginLeft: 0 }}>
                                 <Label for="form_first_name" sm={1.5} style={{ textAlign: "right" }}>First Name</Label>
                                 <Col sm={4.5}>
@@ -300,7 +311,7 @@ class App extends Component
                             <div style={{ marginLeft: "10%", marginTop: 10, width: "80%", textAlign: "center" }}>
                                 <Button type="reset" color="danger" outline style={{ width: 75, borderTopLeftRadius: 100, borderTopRightRadius: 0, borderBottomLeftRadius: 100, borderBottomRightRadius: 0, borderRight: 0 }}>Clear</Button>
                                 <Button type="submit" color="success" value="ok" style={{ width: 125, borderTopLeftRadius: 0, borderTopRightRadius: 100, borderBottomLeftRadius: 0, borderBottomRightRadius: 100 }}>Register</Button>
-                            </div>
+                        </div>*/}
                         </Form>
                     </div>
                 </Drawer>
@@ -340,7 +351,102 @@ class App extends Component
                         <ScrollableAnchor id="schedule">
                             <h1 className="display-3" style={{ paddingTop: 60 }}>Schedule</h1>
                         </ScrollableAnchor>
-                        <h1 style={{ textAlign: "center" }}>Nothing to see here. Check again soon!</h1>
+                        <Container>
+                            <Row>
+                                <Col xs="5">
+                                    <h1 className="display-3" style={{ textAlign: "right", color: "rgba(200, 200, 200, 0.9)" }}>10:00 AM</h1>
+                                </Col>
+                                <Col xs="auto" style={{ padding: 10 }}>
+                                    <h1 className="display-4">Check In</h1>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="5"><h2 style={{ textAlign: "right", color: "rgba(200, 200, 200, 0.75)" }}>10:00 AM</h2></Col>
+                                <Col xs="auto" style={{ padding: 7, paddingLeft: 15, color: "rgba(0, 200, 0, 0.75)" }}>
+                                    Breakfast Munchies!
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="5"><h2 style={{ textAlign: "right", color: "rgba(200, 200, 200, 0.75)" }}>10:30 AM</h2></Col>
+                                <Col xs="auto" style={{ padding: 7, paddingLeft: 15 }}>
+                                    Walk-in Registration
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="5">
+                                    <h1 className="display-3" style={{ textAlign: "right", color: "rgba(200, 200, 200, 0.9)" }}>11:00 AM</h1>
+                                </Col>
+                                <Col xs="auto" style={{ padding: 10 }}>
+                                    <h1 className="display-4">Opening Ceremonies</h1>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="5"><h2 style={{ textAlign: "right", color: "rgba(200, 200, 200, 0.75)" }}>11:30 AM</h2></Col>
+                                <Col xs="auto" style={{ padding: 7, paddingLeft: 15, color: "rgba(0, 200, 200, 0.75)" }}>
+                                    GitHub Workshop
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="5"><h2 style={{ textAlign: "right", color: "rgba(200, 200, 200, 0.75)" }}>12:00 PM</h2></Col>
+                                <Col xs="auto" style={{ padding: 7, paddingLeft: 15, color: "rgba(0, 200, 200, 0.75)" }}>
+                                    Processing.JS Workshop
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="5">
+                                    <h1 className="display-3" style={{ textAlign: "right", color: "rgba(200, 0, 0, 0.9)" }}>11:30 AM</h1>
+                                </Col>
+                                <Col xs="auto" style={{ padding: 10, color: "rgba(200, 0, 0, 0.75)" }}>
+                                    <h1 className="display-4">Hacking!</h1>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="5"><h2 style={{ textAlign: "right", color: "rgba(200, 0, 0, 0.75)" }}>1:00 PM</h2></Col>
+                                <Col xs="auto" style={{ padding: 7, paddingLeft: 15, color: "rgba(0, 200, 0, 0.75)" }}>
+                                    Lunch
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="5"><h2 style={{ textAlign: "right", color: "rgba(200, 0, 0, 0.75)" }}>3:00 PM</h2></Col>
+                                <Col xs="auto" style={{ padding: 7, paddingLeft: 15, color: "rgba(0, 200, 200, 0.75)" }}>
+                                    Cloud Computing Workshop
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="5"><h2 style={{ textAlign: "right", color: "rgba(200, 0, 0, 0.75)" }}>6:00 PM</h2></Col>
+                                <Col xs="auto" style={{ padding: 7, paddingLeft: 15, color: "rgba(0, 200, 0, 0.75)" }}>
+                                    Dinner
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="5"><h2 style={{ textAlign: "right", color: "rgba(200, 0, 0, 0.75)" }}>9:00 PM</h2></Col>
+                                <Col xs="auto" style={{ padding: 7, paddingLeft: 15 }}>
+                                    Project Submission Opens
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="5">
+                                    <h1 className="display-3" style={{ textAlign: "right", color: "rgba(200, 200, 200, 0.9)" }}>9:30 PM</h1>
+                                </Col>
+                                <Col xs="auto" style={{ padding: 10 }}>
+                                    <h1 className="display-4">Judging</h1>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="5"><h2 style={{ textAlign: "right", color: "rgba(200, 200, 200, 0.75)" }}>10:30 PM</h2></Col>
+                                <Col xs="auto" style={{ padding: 7, paddingLeft: 15 }}>
+                                    Closing Ceremonies
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="5">
+                                    <h1 className="display-3" style={{ textAlign: "right", color: "rgba(200, 200, 200, 0.9)" }}>11:00 PM</h1>
+                                </Col>
+                                <Col xs="auto" style={{ padding: 10 }}>
+                                    <h1 className="display-4">Check Out</h1>
+                                </Col>
+                            </Row>
+                        </Container>
                     </Jumbotron>
                     <Jumbotron style={{ paddingLeft: "10%", paddingRight: "10%", borderRadius: 0, backgroundColor: "rgba(0, 0, 0, 0)", color: "white", marginBottom: 0, paddingBottom: 125 }}>
                         <ScrollableAnchor id="faqs">
@@ -388,9 +494,19 @@ class App extends Component
                             <h1 className="display-3" style={{ paddingTop: 60 }}>Sponsors</h1>
                         </ScrollableAnchor>
                         <div style={{ textAlign: "center" }}>
-                            <h1 style={{ textAlign: "center" }}>Friends of SBPL</h1>
-                            <div style={{ display: "inline-block", backgroundColor: "white", width: 500 }}>
-                                <img src={sponsorsSbpl} style={{ width: "100%" }} />
+                            <div style={{ display: "inline-block", width: "40%" }}>
+                                <div style={{ background: "black", margin: 20, padding: 20, marginTop: 0 }}>
+                                    <img src={sponsorsBloomberg} style={{ width: "100%" }} />
+                                </div>
+                                <div style={{ padding: 20 }}>
+                                    <img src={sponsorsSaberpoint} style={{ width: "100%" }} />
+                                </div>
+                                <div style={{ background: "white", margin: 20, padding: 20 }}>
+                                    <img src={sponsorsNJCLC} style={{ width: "100%" }} />
+                                </div>
+                                <div style={{ background: "white", margin: 20, marginTop: 40 }}>
+                                    <img src={sponsorsSbpl} style={{ width: "100%" }} />
+                                </div>
                             </div>
                         </div>
                     </Jumbotron>

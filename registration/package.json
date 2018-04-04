@@ -1,0 +1,12 @@
+{
+  "name": "registration-loader",
+  "version": "1.0.0",
+  "description": "Script to query registration data and output in usable format",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shivan Modha",
+  "license": "MIT",
+  "dependencies": {}
+}
