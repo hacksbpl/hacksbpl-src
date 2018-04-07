@@ -363,7 +363,7 @@ class App extends Component
                             <Row>
                                 <Col xs="5"><h2 style={{ textAlign: "right", color: "rgba(200, 200, 200, 0.75)" }}>10:00 AM</h2></Col>
                                 <Col xs="auto" style={{ padding: 7, paddingLeft: 15, color: "rgba(0, 200, 0, 0.75)" }}>
-                                    Breakfast Munchies!
+                                    Breakfast Munchies! (Donuts and Coffee)
                                 </Col>
                             </Row>
                             <Row>
@@ -383,13 +383,13 @@ class App extends Component
                             <Row>
                                 <Col xs="5"><h2 style={{ textAlign: "right", color: "rgba(200, 200, 200, 0.75)" }}>11:30 AM</h2></Col>
                                 <Col xs="auto" style={{ padding: 7, paddingLeft: 15, color: "rgba(0, 200, 200, 0.75)" }}>
-                                    GitHub Workshop
+                                    Git Workshop
                                 </Col>
                             </Row>
                             <Row>
                                 <Col xs="5"><h2 style={{ textAlign: "right", color: "rgba(200, 200, 200, 0.75)" }}>12:00 PM</h2></Col>
                                 <Col xs="auto" style={{ padding: 7, paddingLeft: 15, color: "rgba(0, 200, 200, 0.75)" }}>
-                                    Processing.JS Workshop
+                                    JavaScript Workshop
                                 </Col>
                             </Row>
                             <Row>
@@ -403,19 +403,13 @@ class App extends Component
                             <Row>
                                 <Col xs="5"><h2 style={{ textAlign: "right", color: "rgba(200, 0, 0, 0.75)" }}>1:00 PM</h2></Col>
                                 <Col xs="auto" style={{ padding: 7, paddingLeft: 15, color: "rgba(0, 200, 0, 0.75)" }}>
-                                    Lunch
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col xs="5"><h2 style={{ textAlign: "right", color: "rgba(200, 0, 0, 0.75)" }}>3:00 PM</h2></Col>
-                                <Col xs="auto" style={{ padding: 7, paddingLeft: 15, color: "rgba(0, 200, 200, 0.75)" }}>
-                                    Cloud Computing Workshop
+                                    Lunch (Chinese Food)
                                 </Col>
                             </Row>
                             <Row>
                                 <Col xs="5"><h2 style={{ textAlign: "right", color: "rgba(200, 0, 0, 0.75)" }}>6:00 PM</h2></Col>
                                 <Col xs="auto" style={{ padding: 7, paddingLeft: 15, color: "rgba(0, 200, 0, 0.75)" }}>
-                                    Dinner
+                                    Dinner (Pizza)
                                 </Col>
                             </Row>
                             <Row>
